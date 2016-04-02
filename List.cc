@@ -1,6 +1,8 @@
 #include "List.h"
 #include <iterator>
 #include <utility>
+#include <stdexcept>
+
 struct List::Node 
 {
     int value {};
@@ -70,6 +72,10 @@ int & List::front()
 
 int & List::at(int idx)
 {
+    return const_cast<int &>(static_cast<List const &>(*this).at(idx));
+}
+int const & List::at(int idx) const
+{
     if (idx >= sz)
         throw std::out_of_range{"Index not found"};
     Node * tmp {head};
@@ -79,10 +85,6 @@ int & List::at(int idx)
         --idx;
     }
     return tmp->value;
-}
-int List::at(int idx) const
-{
-    return static_cast<int>(const_cast<List &>(*this).at(idx));
 }
 
 int List::size() const
