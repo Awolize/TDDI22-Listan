@@ -43,8 +43,8 @@ List::List(std::initializer_list<int> lst)
 
 void List::push_front(int value)
 {
-    head->prev = new Node{value, nullptr, head};
-    head = head->prev;
+    head = new Node{value, nullptr, head};
+    head->next->prev = head;
     ++sz;
 }
 void List::push_back(int value)
