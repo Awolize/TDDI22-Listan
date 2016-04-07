@@ -5,7 +5,8 @@
 
 struct List::Node 
 {
-  Node(int v, Node* p = nullptr, Node* n = nullptr) : value{v}, prev{p}, next{n} {}  
+    Node(int v, Node* p = nullptr, Node* n = nullptr)
+        : value{v}, prev{p}, next{n} {}  
     int value {};
     Node * prev {};
     Node * next {};
