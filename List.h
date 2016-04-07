@@ -21,7 +21,7 @@ public:
     int & front();
 
     int & at(int idx);
-    int at(int idx) const;
+    int const & at(int idx) const;
 
     int size() const;
 
