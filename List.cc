@@ -3,64 +3,79 @@
 #include <utility>
 #include <stdexcept>
 
-struct List::Node 
+struct List::Node
 {
-    Node(int v, Node* p = nullptr, Node* n = nullptr)
-        : value{v}, prev{p}, next{n} {}  
+    Node() = default;
+    Node(int v, Node* p, Node* n)
+        : value{v}, prev{p}, next{n} {}
     int value {};
     Node * prev {};
     Node * next {};
 };
+
+List::List()
+    : head{ new Node{} }, tail{head}, sz{}
+{}
+
 List::List(List const & other)
-    : sz{other.sz}
+    : List{}
 {
-    if ( other.size() == 0 )
-        return;
-    Node * tmp {other.head};
-    head = new Node{other.head->value};
-    tail = head;
-    while ( tmp != nullptr )
+    Node * tmp = other.head;
+    while ( tmp != other.tail )
     {
-        tail->next = new Node{tmp->value, tail};
-        tail = tail->next;
+        push_back(tmp->value);
         tmp = tmp->next;
     }
 }
 List::List(List && tmp) noexcept
+    :List{}
 {
     swap(tmp);
 }
 List::List(std::initializer_list<int> lst)
-    : head{new Node{*lst.begin()}}, tail{head}, sz{1}
+    : List{}
 {
-    for ( auto it = std::next(lst.begin()); it != end(lst); ++it )
+    for ( auto val : lst )
     {
-        tail->next = new Node{*it, tail};
-        tail = tail->next;
-        ++sz;
+        push_back(val);
     }
 }
 
 void List::push_front(int value)
 {
-    head->prev = new Node{value, nullptr, head};
-    head = head->prev;
+    head = new Node{value, nullptr, head};
+    if ( sz == 0 )
+    {
+        tail->prev = head;
+    }
     ++sz;
 }
 void List::push_back(int value)
 {
-    tail->next = new Node{value, tail};
-    tail = tail->next;
-    ++sz;
+    if ( empty() )
+    {
+        push_front(value);
+    }
+    else
+    {
+        tail->prev->next = new Node{value, tail->prev, tail};
+        tail->prev = tail->prev->next;
+        ++sz;
+    }
+}
+
+bool List::empty() const
+{
+    return head == tail;
 }
 
 int List::back() const
 {
-    return tail->value;
+    return tail->prev->value;
 }
 int & List::back()
 {
-    return tail->value;
+    return tail->prev->value;
 }
 
 int List::front() const
