@@ -3,4 +3,4 @@ a.out
 #*#
 *.swp
 *.gch
-
+*.o

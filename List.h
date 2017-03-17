@@ -1,9 +1,12 @@
+#ifndef LIST_H
+#define LIST_H
+
 #include <initializer_list>
 
 class List
 {
 public:
-    List() = default;
+    List();
     List(List const &);
     List(List &&) noexcept;
     List(std::initializer_list<int>);
@@ -24,6 +27,7 @@ public:
     int const & at(int idx) const;
 
     int size() const;
+    bool empty() const;
 
     void swap(List & other) noexcept;
 private:
@@ -32,3 +36,5 @@ private:
     Node * tail {};
     int sz {};
 };
+
+#endif //LIST_H
