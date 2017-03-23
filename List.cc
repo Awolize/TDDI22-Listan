@@ -1,30 +1,24 @@
 #include "List.h"
 #include <iterator>
 #include <utility>
+#include <iostream>
+#include <memory>
 #include <stdexcept>
-
-struct List::Node
-{
-    Node() = default;
-    Node(int v, Node* p, Node* n)
-        : value{v}, prev{p}, next{n} {}
-    int value {};
-    Node * prev {};
-    Node * next {};
-};
+using namespace std;
 
 List::List()
-    : head{ new Node{} }, tail{head}, sz{}
+    : head{ make_unique<Node>() }, tail{head.get()}, sz{}
 {}
+//    : head{ new Node{} }, tail{head.get()}, sz{}
 
 List::List(List const & other)
     : List{}
 {
-    Node * tmp = other.head;
+    Node * tmp = other.head.get();
     while ( tmp != other.tail )
     {
         push_back(tmp->value);
-        tmp = tmp->next;
+	tmp = tmp->next.get();  
     }
 }
 List::List(List && tmp) noexcept
@@ -43,11 +37,13 @@ List::List(std::initializer_list<int> lst)
 
 void List::push_front(int value)
 {
-    head = new Node{value, nullptr, head};
+    head.release();
+    head = make_unique<Node>(value, nullptr, head.get());
     if ( sz == 0 )
     {
-        tail->prev = head;
+        tail->prev = head.get();
     }
+   
     ++sz;
 }
 void List::push_back(int value)
@@ -58,15 +54,16 @@ void List::push_back(int value)
     }
     else
     {
-        tail->prev->next = new Node{value, tail->prev, tail};
-        tail->prev = tail->prev->next;
+	tail->prev->next.release();
+        tail->prev->next = make_unique<Node>(value, tail->prev, tail);
+        tail->prev = tail->prev->next.get();
         ++sz;
     }
 }
 
 bool List::empty() const
 {
-    return head == tail;
+    return head.get() == tail;
 }
 
 int List::back() const
@@ -95,10 +92,10 @@ int const & List::at(int idx) const
 {
     if (idx >= sz)
         throw std::out_of_range{"Index not found"};
-    Node * tmp {head};
+    Node * tmp {head.get()};
     while ( idx > 0 )
     {
-        tmp = tmp->next;
+        tmp = tmp->next.get();
         --idx;
     }
     return tmp->value;
