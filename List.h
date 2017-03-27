@@ -3,9 +3,22 @@
 
 #include <initializer_list>
 #include <memory>
+#include <iterator>
 class List
 {
 public:
+    // typedef typename List::reference reference;
+    class List_Iterator
+    {
+	using value_type = int;
+	using iterator_direcory = std::forward_iterator_tag;
+    public:
+	reference operator*() const;
+	List_Iterator & operator++() /*{ ptr = *this->next.get(); return ptr;} */;
+	List_Iterator & operator--();
+	Node* ptr{};
+    };
+
     List();
     List(List const &);
     List(List &&) noexcept;
@@ -45,4 +58,8 @@ private:
     int sz {};
 };
 
+
+
 #endif //LIST_H
+//http://stackoverflow.com/questions/7758580/writing-your-own-stl-container/7759622#7759622
+//http://stackoverflow.com/questions/8054273/how-to-implement-an-stl-style-iterator-and-avoid-common-pitfalls

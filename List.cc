@@ -6,10 +6,25 @@
 #include <stdexcept>
 using namespace std;
 
+reference List::List_Iterator::operator*() const
+{
+    auto it = *this.List::front();
+    return it;
+}
+
+List_Iterator List::List_Iterator::operator++() 
+{
+    
+}
+
+List_Iterator List::List_Iterator::operator--() 
+{
+    
+}
+
 List::List()
     : head{ make_unique<Node>() }, tail{head.get()}, sz{}
 {}
-//    : head{ new Node{} }, tail{head.get()}, sz{}
 
 List::List(List const & other)
     : List{}
