@@ -4,21 +4,25 @@
 #include <initializer_list>
 #include <memory>
 #include <iterator>
+
 class List
 {
-public:
-    // typedef typename List::reference reference;
-    class List_Iterator
-    {
-	using value_type = int;
-	using iterator_direcory = std::forward_iterator_tag;
-    public:
-	reference operator*() const;
-	List_Iterator & operator++() /*{ ptr = *this->next.get(); return ptr;} */;
-	List_Iterator & operator--();
-	Node* ptr{};
-    };
 
+private:
+    struct Node
+    {
+	Node() = default;
+	Node(int v, Node* p, Node* n)
+	    : value{v}, prev{p}, next{n} {}
+	int value {};
+	Node * prev {};
+	std::unique_ptr<Node> next {};
+    };
+    std::unique_ptr<Node> head {};
+    Node * tail {};
+    int sz {};
+
+public:
     List();
     List(List const &);
     List(List &&) noexcept;
@@ -43,22 +47,30 @@ public:
     bool empty() const;
 
     void swap(List & other) noexcept;
-private:
-    struct Node
+
+    class List_Iterator
     {
-	Node() = default;
-	Node(int v, Node* p, Node* n)
-	    : value{v}, prev{p}, next{n} {}
-	int value {};
-	Node * prev {};
-	std::unique_ptr<Node> next {};
+	typedef List_Iterator self_type;
+	typedef std::bidirectional_iterator_tag iterator_direcory;
+	typedef int value_type;
+	typedef int difference_type;
+	typedef Node * pointer;
+	typedef int & reference;
+    public:
+	List_Iterator();
+	List_Iterator(Node * ptr);
+	reference operator*() const;
+	List_Iterator & operator++();
+	List_Iterator operator++(int); // { ptr = *this->next.get(); return ptr;} ;
+	List_Iterator & operator--();
+	List_Iterator operator--(int);
+	List_Iterator & operator=(const List_Iterator&);
+        bool operator==(const List_Iterator&) const;
+        bool operator!=(const List_Iterator&) const;
+    private:
+	pointer curr{};
     };
-    std::unique_ptr<Node> head {};
-    Node * tail {};
-    int sz {};
 };
-
-
 
 #endif //LIST_H
 //http://stackoverflow.com/questions/7758580/writing-your-own-stl-container/7759622#7759622

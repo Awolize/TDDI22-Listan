@@ -6,22 +6,6 @@
 #include <stdexcept>
 using namespace std;
 
-reference List::List_Iterator::operator*() const
-{
-    auto it = *this.List::front();
-    return it;
-}
-
-List_Iterator List::List_Iterator::operator++() 
-{
-    
-}
-
-List_Iterator List::List_Iterator::operator--() 
-{
-    
-}
-
 List::List()
     : head{ make_unique<Node>() }, tail{head.get()}, sz{}
 {}
@@ -139,4 +123,46 @@ List & List::operator=(List && rhs) &
 {
     swap(rhs);
     return *this;
+}
+//--------------------------------
+//     class List_Iterator
+//--------------------------------
+
+List::List_Iterator::List_Iterator(Node * ptr)
+    : curr(ptr) {}
+
+// Operators
+typename List::List_Iterator::reference List::List_Iterator::operator*() const
+{
+//    auto it = *this.List::front();
+    return curr->data;
+}
+
+List::List_Iterator & List::List_Iterator::operator++() 
+{
+    if(curr->next != nullptr)
+    {
+	curr = curr->next;
+	return *this; 
+    }
+}
+
+List::List_Iterator List::List_Iterator::operator++(int) 
+{
+    List_Iterator temp(*this);
+    if(curr->next != nullptr)
+    {
+	curr = curr->next;
+	return temp; 
+    }
+}
+
+List::List_Iterator & List::List_Iterator::operator--() 
+{
+    
+}
+
+List::List_Iterator List::List_Iterator::operator--(int) 
+{
+    
 }
