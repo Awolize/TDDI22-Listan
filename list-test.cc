@@ -59,6 +59,10 @@ TEST_CASE( "Doing something #2 (move)" )
     CHECK(l.size() == 6);
 }
 
-
-
-
+TEST_CASE( "Iterator Test" )
+{
+    List lst{1,4,2,6,8,9};
+    CHECK(lst.at(2) == 2);
+    CHECK(lst.size() == 6);
+    
+}

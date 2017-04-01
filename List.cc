@@ -134,15 +134,13 @@ List::List_Iterator::List_Iterator(Node * ptr)
 // Operators
 typename List::List_Iterator::reference List::List_Iterator::operator*() const
 {
-//    auto it = *this.List::front();
-    return curr->data;
+    return curr->value;
 }
-
 List::List_Iterator & List::List_Iterator::operator++() 
 {
     if(curr->next != nullptr)
     {
-	curr = curr->next;
+	curr = curr->next.get();
 	return *this; 
     }
 }
@@ -152,17 +150,62 @@ List::List_Iterator List::List_Iterator::operator++(int)
     List_Iterator temp(*this);
     if(curr->next != nullptr)
     {
-	curr = curr->next;
+	curr = curr->next.get();
 	return temp; 
     }
 }
 
 List::List_Iterator & List::List_Iterator::operator--() 
 {
-    
+    if(curr->prev != nullptr)
+    {
+	curr = curr->prev;
+	return *this; 
+    }
 }
 
 List::List_Iterator List::List_Iterator::operator--(int) 
 {
+    List_Iterator temp(*this);
+    if(curr->prev != nullptr)
+    {
+	curr = curr->prev;
+	return temp; 
+    }
+}
+
+bool List::List_Iterator::operator==(const List_Iterator & rhs) const
+{
+    return curr == rhs.curr; 
+}
+
+bool List::List_Iterator::operator!=(const List_Iterator & rhs) const
+{
+    return curr != rhs.curr; 
+}
+
+typename List::List_Iterator::pointer List::List_Iterator::begin()
+{
+    if(curr->prev != nullptr)
+    {
+	curr = curr->prev;
+	return ; 
+    }
+}
+
+
+typename List::List_Iterator::pointer List::List_Iterator::end()
+{
     
+}
+
+
+It<T> begin()
+{
+    return It<T>(vec_);
+}
+
+It<T> end()
+{
+    return It<T>(vec_, vec_.size());
 }

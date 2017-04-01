@@ -61,13 +61,15 @@ public:
 	List_Iterator(Node * ptr);
 	reference operator*() const;
 	List_Iterator & operator++();
-	List_Iterator operator++(int); // { ptr = *this->next.get(); return ptr;} ;
+	List_Iterator operator++(int);
 	List_Iterator & operator--();
 	List_Iterator operator--(int);
-	List_Iterator & operator=(const List_Iterator&);
+//	List_Iterator & operator=(const List_Iterator&);
         bool operator==(const List_Iterator&) const;
         bool operator!=(const List_Iterator&) const;
     private:
+	pointer begin();
+	pointer end();
 	pointer curr{};
     };
 };
