@@ -7,7 +7,6 @@
 
 class List
 {
-
 private:
     struct Node
     {
@@ -64,16 +63,16 @@ public:
 	List_Iterator operator++(int);
 	List_Iterator & operator--();
 	List_Iterator operator--(int);
-//	List_Iterator & operator=(const List_Iterator&);
         bool operator==(const List_Iterator&) const;
         bool operator!=(const List_Iterator&) const;
+
     private:
-	pointer begin();
-	pointer end();
 	pointer curr{};
     };
+    List_Iterator begin();
+    List_Iterator end();
 };
 
 #endif //LIST_H
-//http://stackoverflow.com/questions/7758580/writing-your-own-stl-container/7759622#7759622
-//http://stackoverflow.com/questions/8054273/how-to-implement-an-stl-style-iterator-and-avoid-common-pitfalls
+// http://stackoverflow.com/questions/7758580/writing-your-own-stl-container/7759622#7759622
+// http://stackoverflow.com/questions/8054273/how-to-implement-an-stl-style-iterator-and-avoid-common-pitfalls

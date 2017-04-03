@@ -66,3 +66,13 @@ TEST_CASE( "Iterator Test" )
     CHECK(lst.size() == 6);
     
 }
+
+
+TEST_CASE( "Iterator begin/end" )
+{
+    List lst{1,4,2,6,8,9};
+    CHECK(lst.begin() == );
+    CHECK(lst.size() == 6);
+    
+}
+

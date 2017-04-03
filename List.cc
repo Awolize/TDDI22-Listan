@@ -184,28 +184,13 @@ bool List::List_Iterator::operator!=(const List_Iterator & rhs) const
     return curr != rhs.curr; 
 }
 
-typename List::List_Iterator::pointer List::List_Iterator::begin()
-{
-    if(curr->prev != nullptr)
-    {
-	curr = curr->prev;
-	return ; 
-    }
+List::List_Iterator List::begin()
+{ 
+    return List_Iterator(head.get()); 
 }
 
 
-typename List::List_Iterator::pointer List::List_Iterator::end()
+List::List_Iterator List::end()
 {
-    
-}
-
-
-It<T> begin()
-{
-    return It<T>(vec_);
-}
-
-It<T> end()
-{
-    return It<T>(vec_, vec_.size());
+    return List_Iterator(tail); 
 }
