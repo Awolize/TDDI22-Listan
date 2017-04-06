@@ -36,14 +36,14 @@ namespace List_NS
 	void push_front(T);
 	void push_back(T);
 
-	int back() const;
-	int & back();
+	T back() const;
+	T & back();
 
-	int front() const;
-	int & front();
+	T front() const;
+	T & front();
 
-	int & at(int idx);
-	int const & at(int idx) const;
+	T & at(int idx);
+	T const & at(int idx) const;
 
 	int size() const;
 	bool empty() const;
@@ -52,13 +52,13 @@ namespace List_NS
 
 	class List_Iterator
 	{
-	    typedef List_Iterator self_type;
-	    typedef std::bidirectional_iterator_tag iterator_direcory;
-	    typedef int value_type;
-	    typedef int difference_type;
-	    typedef Node * pointer;
-	    typedef int & reference;
 	public:
+	    using iterator_category = std::bidirectional_iterator_tag;
+	    using value_type = T;
+	    using difference_type = T;
+	    using reference = T &;
+	    using pointer = T *;
+	
 	    List_Iterator();
 	    List_Iterator(Node * ptr);
 	    reference operator*() const;
@@ -68,10 +68,10 @@ namespace List_NS
 	    List_Iterator operator--(int);
 	    bool operator==(const List_Iterator&) const;
 	    bool operator!=(const List_Iterator&) const;
-	    reference operator->() const;
+	    pointer operator->() const;
 	
 	private:
-	    pointer curr{};
+	    Node * curr{};
 	};
 	List_Iterator begin();
 	List_Iterator end();
