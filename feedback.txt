@@ -1,0 +1,57 @@
+Bra jobbat med labben men det finns några saker som behöver kompletteras:
+
+
+Iteratorn fungerar inte att göra inkrement i om listan är const, se följande testfall.
+Ni bör ha testfall för pre och post inkrement och dekrement med const listor.
+
+TEST_CASE("Iterator const pre-increment")
+{
+    const List_NS::List<int> l{1,2,3};
+    auto it{l.begin()};
+    auto it2{it};
+    CHECK(*it == 1);
+    CHECK(*it2 == 1);
+    CHECK(it != l.end());
+
+    it2 = ++it;
+    CHECK(*it == 2);
+    CHECK(*it2 == 2);
+
+    it2 = ++it;
+    CHECK(*it == 3);
+    CHECK(*it2 == 3);
+
+    it2 = ++it;
+    CHECK(it == l.end());
+    CHECK(it == l.end());
+    CHECK(it != l.begin());
+}
+
+
+Om ni skapar en ny klass List i er testfil och sedan kör testfallet nedan får ni problem med
+att kompilatorn inte vet vilken list ni menar. Detta är vad namespace är till för att motverka.
+Detta behöver lösas, jag skulle börja med att ta bort era "using" namespace i tcc-filen.
+
+class List
+{
+};
+
+
+TEST_CASE("Namespace")
+{
+    List l;
+    List_NS::List<int> l2;
+}
+
+
+
+
+
+Ni har ett problem med er "at()" funktion och listar gjorda av strängar. Försök skriva ett testfall som gör en lista med strängar och sedan plockar ut en sträng ur listan med hjälp av at().
+
+
+
+
+
+Lycka till
+Pontus
