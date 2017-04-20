@@ -77,7 +77,7 @@ TEST_CASE( "PUSH_BACK_FRONT")
     l2.swap(lst);
     CHECK(l2.front() == 3);
     CHECK(l2.back() == 22);
-    List_NS::List <int>l3 = List<int>{2,4,5};
+    List_NS::List <int>l3 = List_NS::List<int>{2,4,5};
     CHECK(l3.front() == 2);
     CHECK(l3.back() == 5);
 }
@@ -163,10 +163,54 @@ TEST_CASE("Iterator !=")
 
 TEST_CASE("Iterator ->")
 {
-    List<std::string> str {".", "?", "!"};
+    List_NS::List<std::string> str {".", "?", "!"};
     auto it = str.begin();
     CHECK(*it == ".");
     CHECK(str.size() == 3);
     it++;
     CHECK(*it != ".");
 }
+
+TEST_CASE("Iterator const pre-increment")
+{
+    const List_NS::List<int> l{1,2,3};
+    auto it{l.begin()};
+    auto it2{it};
+    CHECK(*it == 1);
+    CHECK(*it2 == 1);
+    CHECK(it != l.end());
+
+    it2 = ++it;
+    CHECK(*it == 2);
+    CHECK(*it2 == 2);
+
+    it2 = ++it;
+    CHECK(*it == 3);
+    CHECK(*it2 == 3);
+
+    it2 = ++it;
+    CHECK(it == l.end());
+    CHECK(it == l.end());
+    CHECK(it != l.begin());
+}
+
+TEST_CASE( "creat strings test first" )
+{
+  List_NS::List<std::string> lst{"hej", "wops"};
+  REQUIRE(lst.at(0) == "hej");
+  REQUIRE(lst.size() == 3);
+}
+
+
+class List
+{
+};
+
+
+TEST_CASE("Namespace")
+{
+    List l;
+    List_NS::List<int> l2;
+}
+
+

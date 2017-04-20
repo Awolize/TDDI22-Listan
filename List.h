@@ -73,8 +73,8 @@ namespace List_NS
 	private:
 	    Node * curr{};
 	};
-	List_Iterator begin();
-	List_Iterator end();
+	List_Iterator begin() const;
+	List_Iterator end() const;
     };
 }
 #include "List.tcc"
