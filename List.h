@@ -59,8 +59,8 @@ namespace List_NS
 	    using reference = T &;
 	    using pointer = T *;
 	
-	    List_Iterator();
-	    List_Iterator(Node * ptr);
+	    List_Iterator();//denna ska vara private låt list vara friend till list iterator så begin och end kommer åt den
+	    List_Iterator(Node * ptr); //denna ska vara private låt list vara friend till list iterator så begin och end kommer åt den
 	    reference operator*() const;
 	    List_Iterator & operator++();
 	    List_Iterator operator++(int);
