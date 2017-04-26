@@ -198,7 +198,7 @@ TEST_CASE( "creat strings test first" )
 {
   List_NS::List<std::string> lst{"hej", "wops"};
   REQUIRE(lst.at(0) == "hej");
-  REQUIRE(lst.size() == 3);
+  REQUIRE(lst.size() == 2);
 }
 
 

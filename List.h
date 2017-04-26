@@ -23,12 +23,11 @@ namespace List_NS
 	std::unique_ptr<Node> head {};
 	Node * tail {};
 	int sz {};
-
     public:
 	List();
 	List(List const &);
-	List(List &&) noexcept;
-	List(std::initializer_list<T>);
+        List(List &&) noexcept;
+        List(std::initializer_list<T>);
 
 	List & operator=(List const &)&;
 	List & operator=(List &&)&;
@@ -53,14 +52,12 @@ namespace List_NS
 	class List_Iterator
 	{
 	public:
+	    friend class List;
 	    using iterator_category = std::bidirectional_iterator_tag;
 	    using value_type = T;
 	    using difference_type = T;
 	    using reference = T &;
 	    using pointer = T *;
-	
-	    List_Iterator();//denna ska vara private låt list vara friend till list iterator så begin och end kommer åt den
-	    List_Iterator(Node * ptr); //denna ska vara private låt list vara friend till list iterator så begin och end kommer åt den
 	    reference operator*() const;
 	    List_Iterator & operator++();
 	    List_Iterator operator++(int);
@@ -69,8 +66,10 @@ namespace List_NS
 	    bool operator==(const List_Iterator&) const;
 	    bool operator!=(const List_Iterator&) const;
 	    pointer operator->() const;
-	
+
 	private:
+	    List_Iterator();
+	    List_Iterator(Node * ptr); 
 	    Node * curr{};
 	};
 	List_Iterator begin() const;
@@ -80,5 +79,3 @@ namespace List_NS
 #include "List.tcc"
 
 #endif //LIST_H
-// http://stackoverflow.com/questions/7758580/writing-your-own-stl-container/7759622#7759622
-// http://stackoverflow.com/questions/8054273/how-to-implement-an-stl-style-iterator-and-avoid-common-pitfalls
